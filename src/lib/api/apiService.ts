@@ -3,7 +3,7 @@ import { get } from "svelte/store";
 
 export const BASE_URL = "https://bbaii2i41d3ecpiaumro.containers.yandexcloud.net/api/v1"
 
-class ApiError
+export class ApiError
 {
     constructor(public Code: number, public Description: string) {}
 }
@@ -19,7 +19,7 @@ export async function getLangs(): Promise<string[]|ApiError> {
 	};
 
 	if (token) {
-		headers["X-Authorization"] = `Bearer ${token.AccessToken}`;
+		headers["X-Authorization"] = `Bearer ${token.access_token}`;
 	}    
 
     const res = await fetch(`${BASE_URL}/data/langs`, 
@@ -49,7 +49,7 @@ export async function getLangPlot(language: string): Promise<string|ApiError> {
 	};
 
 	if (token) {
-		headers["X-Authorization"] = `Bearer ${token.AccessToken}`;
+		headers["X-Authorization"] = `Bearer ${token.access_token}`;
 	}    
 
     const res = await fetch(`${BASE_URL}/data/lang?lang=${encodeURIComponent(language)}`, 
@@ -76,7 +76,15 @@ export async function getLangPlot(language: string): Promise<string|ApiError> {
 }
 
 export class TokenInfo {
-    constructor(public AccessToken: string, public ExpiresIn: string) {}
+	constructor(
+		public access_token: string,
+		public expires_in: number, // в секундах
+		public expires_at: number = Date.now() + expires_in * 1000 // в миллисекундах
+	) {}
+
+	isExpired(): boolean {
+		return Date.now() > this.expires_at;
+	}
 }
 
 export async function exchangeCode(code: string): Promise<TokenInfo|ApiError> {
@@ -101,7 +109,7 @@ export async function exchangeCode(code: string): Promise<TokenInfo|ApiError> {
     }
     try {
         const json = await res.json()
-        return new TokenInfo(json.access_token, json.expires_in)
+        return new TokenInfo(json.access_token, Number(json.expires_in))
     } catch (ex) {
         return new ApiError(500, "Invalid JSON from server");
     }
