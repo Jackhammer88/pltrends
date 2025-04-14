@@ -4,7 +4,7 @@
     import LangTrends from '$lib/components/LangTrends.svelte';
 	import { ghToken } from '$lib/stores/langs';
 
-    const authUrl = `${BASE_URL}/auth/signin`
+    const authUrl = `${BASE_URL}/auth/signinw`
 
     let selectedLanguages: string[] = [];
     let showModal = false;
