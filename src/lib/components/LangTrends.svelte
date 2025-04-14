@@ -24,7 +24,6 @@
     padding: 20px;
     margin-top: 20px;
     
-    max-height: 60vh; /* Ограничиваем высоту */
     overflow-y: auto; /* Включаем вертикальный скролл */
 }
 </style>
