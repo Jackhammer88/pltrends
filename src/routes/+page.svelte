@@ -45,7 +45,7 @@
         }
     });
 
-    let selectedLanguages: string[] = [];
+    let selectedLanguages: string[] = ["C#", "C++", "TypeScript"];
     let showModal = false;
 
     function openDialog() {
