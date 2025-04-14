@@ -5,6 +5,7 @@
     import LangTrends from "$lib/components/LangTrends.svelte";
     import { ghToken } from "$lib/stores/langs";
     import { onMount } from "svelte";
+    import { dev } from '$app/environment';
 
     const authUrl = `${BASE_URL}/auth/signinw`;
 
@@ -27,7 +28,11 @@
 
             if (result instanceof TokenInfo) {
                 ghToken.set(result);
-                goto('/');
+                if (dev) {
+                    goto('/');
+                } else {
+                    goto('/pltrends');
+                }
             } else if (result instanceof ApiError) {
                 errorMessage = `Ошибка: ${result.Description}`;
                 console.error(result);
