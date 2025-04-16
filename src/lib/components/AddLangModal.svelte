@@ -41,7 +41,6 @@
 					l.toLowerCase().includes(query.toLowerCase()) &&
 					!selectedLanguages.includes(l) // <- исключаем уже выбранные
 				)
-				.slice(0, 10)
 		: [];
 
 	function handleSelect(lang: string) {
