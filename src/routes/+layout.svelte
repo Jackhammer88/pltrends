@@ -12,7 +12,6 @@
 		if (raw) {
 			try {
 				const parsed = JSON.parse(raw);
-				// минимальная валидация
 				if (parsed?.AccessToken && parsed?.ExpiresIn) {
 					initialValue = new TokenInfo(parsed.AccessToken, parsed.ExpiresIn);
 				}

@@ -24,6 +24,13 @@
     padding: 20px;
     margin-top: 20px;
     
-    overflow-y: auto; /* Включаем вертикальный скролл */
+    overflow-y: auto;
 }
+
+@media (max-width: 655px) {
+	.lang-trends-container {
+		justify-content: center;
+	}
+}
+
 </style>

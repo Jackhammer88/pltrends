@@ -99,8 +99,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.6); /* Прозрачный белый */
-    backdrop-filter: blur(6px); /* Чуть размытый фон */
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
     font-weight: bold;
     font-size: 14px;
     z-index: 10;
@@ -138,29 +138,26 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    /* Сместим в центр, без масштабирования */
+
     transform: translate(-50%, -50%);
-    width: auto;      /* Важно: убираем фиксированный размер контейнера */
+    width: auto; 
     height: auto;
-    background: rgba(0,0,0,0.2); /* возможно чуть подзатемнить фон внутри контейнера */
+    background: rgba(0,0,0,0.2);
     z-index: 100;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     cursor: zoom-out;
-    border-radius: 0; /* на ваше усмотрение */
-    overflow: visible; /* чтобы картинка не обрезалась */
+    border-radius: 0;
+    overflow: visible;
 }
 
 .image-container.zoomed img {
-    width: auto;      /* Снимаем ограничения */
+    width: auto;
     height: auto;
-    max-width: 90vw;  /* Ограничиваем только доступным окном */
+    max-width: 90vw;
     max-height: 90vh;
     object-fit: contain;
-    /* Попробуйте добавить эти свойства, если WebKit смазывает: */
     image-rendering: -webkit-optimize-contrast; 
     image-rendering: crisp-edges;
-    /* или */
-    /* image-rendering: pixelated; */
 }
 
 /* Спиннер */
@@ -169,7 +166,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    padding-top: 30px; /* Оффсет для визуального центрирования */
+    padding-top: 30px;
 }
 
 .spinner {

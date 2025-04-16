@@ -30,6 +30,10 @@
 
 		window.addEventListener("keydown", handleKeyDown);
 
+		setTimeout(() => {
+			inputEl?.focus();
+		}, 50);
+
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
 		};

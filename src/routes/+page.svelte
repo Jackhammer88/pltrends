@@ -114,16 +114,16 @@
     .content {
         width: 100%;
         text-align: center;
-        z-index: 2; /* Чтобы текст был поверх */
+        z-index: 2;
     }
 
     .controls {
         display: flex;
-        justify-content: center; /* Выравниваем кнопку вправо */
+        justify-content: center;
         align-items: center;
         gap: 10px;
         margin-bottom: 20px;
-        width: 100%; /* Растягиваем на всю ширину */
+        width: 100%;
     }
 
     .add-lang-btn {
@@ -136,7 +136,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-top: 30px; /* Оффсет для визуального центрирования */
+        padding-top: 30px;
     }
 
     .spinner {
