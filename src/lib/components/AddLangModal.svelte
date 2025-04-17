@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { langs, loadLangs } from "$lib/stores/langs";
-	import { onMount } from "svelte";
+	import type { ProgLanguage } from '$lib/api/data';
+	import { langs, loadLangs } from '$lib/stores/langs';
+	import { onMount } from 'svelte';
 
 	export let selectedLanguages: string[] = [];
 	export let onSelect: (lang: string) => void;
 	export let onClose: () => void;
 
-	let query = "";
-	let filtered: string[] = [];
+	let query = '';
+	let filtered: ProgLanguage[] = [];
 
 	let inputEl: HTMLInputElement | null = null;
 	let dropdownVisible = false;
-	let dropdownStyles = "";
+	let dropdownStyles = '';
 
 	function onOverlayClick(e: MouseEvent) {
 		if (e.target === e.currentTarget) {
@@ -23,28 +24,27 @@
 		loadLangs();
 
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape") {
+			if (e.key === 'Escape') {
 				onClose();
 			}
 		};
 
-		window.addEventListener("keydown", handleKeyDown);
+		window.addEventListener('keydown', handleKeyDown);
 
 		setTimeout(() => {
 			inputEl?.focus();
 		}, 50);
 
 		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener('keydown', handleKeyDown);
 		};
 	});
 
 	$: filtered = query
-		? $langs
-				.filter((l) =>
-					l.toLowerCase().includes(query.toLowerCase()) &&
-					!selectedLanguages.includes(l) // <- исключаем уже выбранные
-				)
+		? $langs.filter(
+				(l) =>
+					l.Name.toLowerCase().includes(query.toLowerCase()) && !selectedLanguages.includes(l.Name)
+			)
 		: [];
 
 	function handleSelect(lang: string) {
@@ -90,78 +90,80 @@
 
 {#if dropdownVisible}
 	<ul class="lang-dropdown" style={dropdownStyles}>
-		{#each filtered as lang}
-			<li on:click={() => handleSelect(lang)}>{lang}</li>
+		{#each filtered as lang (lang.Id)}
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+			<li on:click={() => handleSelect(lang.Name)}>{lang.Name}</li>
 		{/each}
 	</ul>
 {/if}
 
 <style>
-.dialog-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	background: rgba(0, 0, 0, 0.6);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1000;
-}
+	.dialog-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0, 0, 0, 0.6);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
+	}
 
-.dialog-content {
-	background: white;
-	padding: 20px 30px;
-	border-radius: 12px;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-	width: 320px;
-	font-family: Arial, sans-serif;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-}
+	.dialog-content {
+		background: white;
+		padding: 20px 30px;
+		border-radius: 12px;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+		width: 320px;
+		font-family: Arial, sans-serif;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+	}
 
-.dialog-content h2 {
-	font-size: 20px;
-	margin-bottom: 15px;
-	text-align: center;
-}
+	.dialog-content h2 {
+		font-size: 20px;
+		margin-bottom: 15px;
+		text-align: center;
+	}
 
-.lang-search-input {
-	width: 100%;
-	padding: 10px;
-	border: 2px solid #ccc;
-	border-radius: 6px;
-	box-sizing: border-box;
-	margin-bottom: 20px;
-}
+	.lang-search-input {
+		width: 100%;
+		padding: 10px;
+		border: 2px solid #ccc;
+		border-radius: 6px;
+		box-sizing: border-box;
+		margin-bottom: 20px;
+	}
 
-.dialog-actions {
-	display: flex;
-	justify-content: flex-end;
-}
+	.dialog-actions {
+		display: flex;
+		justify-content: flex-end;
+	}
 
-/* Dropdown стили */
-.lang-dropdown {
-	position: fixed;
-	max-height: 200px;
-	overflow-y: auto;
-	background: white;
-	border: 1px solid #ccc;
-	border-radius: 6px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
+	/* Dropdown стили */
+	.lang-dropdown {
+		position: fixed;
+		max-height: 200px;
+		overflow-y: auto;
+		background: white;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
 
-.lang-dropdown li {
-	padding: 8px 12px;
-	cursor: pointer;
-}
+	.lang-dropdown li {
+		padding: 8px 12px;
+		cursor: pointer;
+	}
 
-.lang-dropdown li:hover {
-	background: #f0f0f0;
-}
+	.lang-dropdown li:hover {
+		background: #f0f0f0;
+	}
 </style>
